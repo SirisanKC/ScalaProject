@@ -151,6 +151,7 @@ object REPS extends App {
     println("7. Save Data to File")
     println("8. Load Data from File")
     println("9. Exit")
+    println("10. Functor Demo")
   }
 
   def filterMenu(): Unit = {
@@ -243,7 +244,25 @@ object REPS extends App {
       case "9" =>
         sys.exit()
 
+      case "10" =>
 
+        val sample = data.headOption
+
+        sample match {
+          case Some(e) =>
+            val box = Box(e)
+
+            val updated = box.map(d => d.copy(energy = d.energy + 10))
+
+            println("Original Data:")
+            println(box)
+
+            println("After Functor (energy +10):")
+            println(updated)
+
+          case None =>
+            println("No data available.")
+        }
 
       case _ =>
         println("Invalid option.")
@@ -256,3 +275,8 @@ object REPS extends App {
 }
 
 
+// FUNCTOR (PART B)
+
+case class Box[A](value: A) {
+  def map[B](f: A => B): Box[B] = Box(f(value))
+}
